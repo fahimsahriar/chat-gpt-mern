@@ -1,5 +1,3 @@
-Sure, here's a basic README for your project:
-
 # **ChatGPT Integration**
 
 API of chatGPT can make our software far more better. In this project I used ChatGPT API to generate response. This is a full-stack web application consisting of a client-side frontend and a server-side backend.
