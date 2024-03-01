@@ -6,10 +6,12 @@ const openai = new OpenAI({
 });
 
 const prompt =  async (req, res) => {
+    const { userMessage } = req.body;
+    console.log(userMessage);
     try {
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
-            messages: [{'role':'user', "content":"hi"}],
+            messages: [{'role':'user', "content": userMessage}],
             max_tokens: 100
         });
         console.log(response.choices[0].message);

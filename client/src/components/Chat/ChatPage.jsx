@@ -1,56 +1,77 @@
-// ChatPage.js
-import React, { useState, useRef, useEffect } from 'react';
-import styles from './ChatPage.module.css';
+import React, { useState, useRef, useEffect } from "react";
+import styles from "./ChatPage.module.css";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import {
+  MainContainer,
+  ChatContainer,
+  MessageList,
+  Message,
+  MessageInput,
+  TypingIndicator,
+} from "@chatscope/chat-ui-kit-react";
+import axios from "axios";
 
 const ChatPage = () => {
-  const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([
-    { id: 1, text: 'Hello!', sender: 'receiver' },
-    { id: 2, text: 'How are you?', sender: 'receiver' },
-    { id: 3, text: 'I\'m doing well, thanks!', sender: 'sender' },
-  ]);
+  const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
-  const chatEndRef = useRef(null);
+  // Function to handle sending messages
+  const handleSend = async (text) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { content: text, fromMe: true },
+    ]);
+    // Update UI to show typing indicator
+    setIsTyping(true);
 
-  useEffect(() => {
-    chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [chatHistory]);
-
-  const handleMessageChange = (e) => {
-    setMessage(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    if (message.trim() !== '') {
-      setChatHistory([...chatHistory, { id: Date.now(), text: message, sender: 'sender' }]);
-      setMessage('');
+    try {
+      // Send message to backend API
+      const response = await axios.post("http://localhost:8080/api/prompt", {
+        userMessage: text,
+      });
+      console.log(response);
+      // Update messages state with response from the server
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { content: response.data.content, fromMe: false },
+      ]);
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
+    } finally {
+      // Update UI to hide typing indicator
+      setIsTyping(false);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.chatHistory}>
-        {chatHistory.map((msg) => (
-          <div
-            key={msg.id}
-            className={`${styles.message} ${msg.sender === 'sender' ? styles.sender : styles.receiver}`}
-          >
-            {msg.text}
-          </div>
-        ))}
-        <div ref={chatEndRef}></div>
-      </div>
-      <div className={styles.inputContainer}>
-        <input
-          type="text"
-          className={styles.inputBox}
-          placeholder="Type your message..."
-          value={message}
-          onChange={handleMessageChange}
-        />
-        <button className={styles.submitButton} onClick={handleSubmit}>
-          Send
-        </button>
+    <div className='App'>
+      <div style={{ position: "relative", height: "800px" }}>
+        <MainContainer>
+          <ChatContainer>
+            <MessageList
+              scrollBehavior='smooth'
+              typingIndicator={
+                isTyping ? (
+                  <TypingIndicator content='ChatGPT is typing' />
+                ) : null
+              }
+            >
+              {messages.map((message, i) => (
+                <Message
+                  key={i}
+                  model={{
+                    message: message.content,
+                    sender: message.fromMe ? "user" : "bot",
+                    direction: message.fromMe ? "outgoing" : "incoming",
+                    position: "single",
+                  }}
+                />
+              ))}
+            </MessageList>
+            <MessageInput placeholder='Type message here' onSend={handleSend} />
+          </ChatContainer>
+        </MainContainer>
       </div>
     </div>
   );

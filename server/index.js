@@ -6,8 +6,9 @@ const connection = require("./db");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const promptRoutes = require("./routes/prompt");
+const bodyParser = require('body-parser');
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
 // database connection
 connection();
 
