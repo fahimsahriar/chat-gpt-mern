@@ -46,9 +46,9 @@ const ChatPage = () => {
 
   return (
     <div className='App'>
-      <div style={{ position: "relative", height: "800px" }}>
+      <div style={{ position: "relative" }} className={styles.chat_area}>
         <MainContainer>
-          <ChatContainer>
+          <ChatContainer className={styles.message_area}>
             <MessageList
               scrollBehavior='smooth'
               typingIndicator={

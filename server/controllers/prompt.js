@@ -4,17 +4,19 @@ const OpenAI = require("openai");
 const openai = new OpenAI({
     apiKey: process.env.OPEN_AI_KEY,
 });
+const conversationHistory = []; // Array to store conversation history
 
 const prompt =  async (req, res) => {
     const { userMessage } = req.body;
-    console.log(userMessage);
+    // Add user message to conversation history
+    conversationHistory.push({ role: 'user', content: userMessage });
     try {
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
-            messages: [{'role':'user', "content": userMessage}],
-            max_tokens: 100
+            messages: conversationHistory, // Pass conversation history to API
         });
-        console.log(response.choices[0].message);
+        // Add AI response to conversation history
+        conversationHistory.push({ role: 'assistant', content: response.choices[0].message.content });
 
         // Send a response with a status code of 200 (OK) to Postman
         res.status(200).send(response.choices[0].message);

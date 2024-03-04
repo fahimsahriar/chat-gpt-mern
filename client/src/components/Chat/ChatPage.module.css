@@ -1,4 +1,10 @@
 /* ChatPage.module.css */
+.chat_area{
+  height: calc(100vh - 70px);
+}
+.message_area{
+  overflow-y: scroll;
+}
 .container {
   display: flex;
   flex-direction: column;
