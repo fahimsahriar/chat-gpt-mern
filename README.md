@@ -1,63 +1,38 @@
-Sure, here's a basic README for your project:
+# **ChatGPT Integration**
 
-# **ChatGPT Clone**
+API of chatGPT can make our software far more better. In this project I used ChatGPT API to generate response. It is a full-stack web application consisting of a client-side frontend and a server-side backend.
 
-This is a full-stack web application consisting of a client-side frontend and a server-side backend.
 
-## **Description**
+### Setup
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/fahimsahriar/chat-gpt-mern
+   
 
-This project aims to provide a seamless user experience by utilizing modern web technologies for both frontend and backend development. The frontend is built using React, while the backend is powered by Node.js with Express, along with MongoDB for database management. The combination of these technologies allows for the creation of dynamic and responsive web applications.
+2. **Navigate to the Client Folder**
 
-## **Installation**
+    ```bash
+    cd client
 
-To run this project locally, follow these steps:
+3. **Install Dependencies**
 
-- Clone the repository:
-- bash
-- Copy code
+    ```bash
+    npm install
 
-git clone &lt;repository_url&gt;
+4. **Navigate to the Server Folder**
 
-- Navigate to the client directory and install dependencies:
-- bash
-- Copy code
+    ```bash
+    cd ../server
 
-cd client
+5. **Install Backend Dependencies**
 
-npm install
+    ```bash
+    npm install
 
-- Navigate to the server directory and install dependencies:
-- bash
-- Copy code
+6. **Start Both Backend & Frontend Server**
 
-cd ../server
-
-npm install
-
-## **Usage**
-
-To start the development server for the client-side frontend:
-
-bash
-
-Copy code
-
-cd client
-
-npm start
-
-To start the server-side backend:
-
-bash
-
-Copy code
-
-cd server
-
-npm start
-
-Make sure MongoDB is installed and running locally or provide the appropriate connection URI in the server's environment variables.
-
+    ```bash
+    npm start
 ## **Technologies Used**
 
 ### **Frontend**
