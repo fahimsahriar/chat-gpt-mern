@@ -5,6 +5,7 @@ const cors = require("cors");
 const connection = require("./db");
 const authRoutes = require("./routes/auth");
 const promptRoutes = require("./routes/prompt");
+const weather = require("./routes/weather");
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,6 +19,7 @@ app.use(cors());
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/prompt", promptRoutes);
+app.use("/api/weather", weather);
 
 
 const port = process.env.PORT || 8080;
