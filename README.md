@@ -27,7 +27,7 @@ API of chatGPT can make our software far more better. In this project I used Cha
   - Basic setup of a function in ChatGPT.
   - Example function: Retrieving weather information by providing a location parameter.
 
-### Setup
+## Setup
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/fahimsahriar/chat-gpt-mern
