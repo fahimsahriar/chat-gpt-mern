@@ -2,6 +2,30 @@
 
 API of chatGPT can make our software far more better. In this project I used ChatGPT API to generate response. It is a full-stack web application consisting of a client-side frontend and a server-side backend.
 
+## Branches and Features
+
+### 1. `feature#/authentication-authorization`
+
+- **Description:** Basic starter code for a full-stack MERN software with authentication and authorization features.
+- **Key Features:**
+  - User sign-up functionality.
+  - User log-in system.
+  - Password recovery mechanism.
+
+### 2. `feature#/initiating-chatgpt-api`
+
+- **Description:** Implementation of the ChatGPT API for natural language conversations.
+- **Key Features:**
+  - User-friendly UI for a seamless chatting experience.
+  - Persistence of previous messages.
+  - Ability to provide a prompt and receive a ChatGPT-generated response.
+
+### 3. `feature#/function-calling`
+
+- **Description:** Introduction of function calling in ChatGPT with a focus on a specific function.
+- **Key Features:**
+  - Basic setup of a function in ChatGPT.
+  - Example function: Retrieving weather information by providing a location parameter.
 
 ### Setup
 1. **Clone the Repository**
