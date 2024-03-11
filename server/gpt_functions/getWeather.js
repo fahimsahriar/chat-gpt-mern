@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require("axios");
 
 const getCurrentWeather = async (city) => {
   try {
@@ -16,6 +16,11 @@ const getCurrentWeather = async (city) => {
 
     // Send the weather data in the response
     return JSON.stringify(response.data);
+    // return JSON.stringify({
+    //   fruit: "Apple",
+    //   size: "Large",
+    //   color: "Red",
+    // });
   } catch (error) {
     // Handle errors
     console.error("Error fetching weather data:", error.message);
