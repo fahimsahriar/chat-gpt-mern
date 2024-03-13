@@ -6,6 +6,7 @@ const connection = require("./db");
 const authRoutes = require("./routes/auth");
 const promptRoutes = require("./routes/prompt");
 const weather = require("./routes/weather");
+const calendar = require("./routes/calendar");
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/prompt", promptRoutes);
 app.use("/api/weather", weather);
+app.use("/api/calendar", calendar);
 
 
 const port = process.env.PORT || 8080;
