@@ -1,6 +1,7 @@
 require("dotenv").config();
 const OpenAI = require("openai");
 const getCurrentWeather = require("../gpt_functions/getWeather");
+const createEvent = require("../gpt_functions/createEvent");
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI_KEY,
@@ -26,6 +27,44 @@ const tools = [
       },
     },
   },
+  {
+    type: "function",
+    function: {
+      name: "createEvent",
+      description: "Create a new event on the user's calendar",
+      parameters: {
+        type: "object",
+        properties: {
+          summary: {
+            type: "string",
+            description: "Summary or title of the event",
+          },
+          start: {
+            type: "string",
+            description: "Start date and time of the event (ISO 8601 format)",
+          },
+          end: {
+            type: "string",
+            description: "End date and time of the event (ISO 8601 format)",
+          },
+          location: {
+            type: "string",
+            description: "Location of the event",
+          },
+          description: {
+            type: "string",
+            description: "Description of the event",
+          },
+          attendees: {
+            type: "array",
+            description: "List of attendees",
+            items: { type: "string" },
+          },
+        },
+        required: ["summary", "start", "end"],
+      },
+    },
+  },
 ];
 
 const prompt = async (req, res) => {
@@ -48,14 +87,23 @@ const prompt = async (req, res) => {
       // Note: the JSON response may not always be valid; be sure to handle errors
       const availableFunctions = {
         get_current_weather: getCurrentWeather,
+        createEvent: createEvent,
       }; // only one function in this example, but you can have multiple
       messages.push(responseMessage); // extend conversation with assistant's reply
       for (const toolCall of toolCalls) {
         const functionName = toolCall.function.name;
         const functionToCall = availableFunctions[functionName];
+        console.log("Function to call:", functionToCall);
         const functionArgs = JSON.parse(toolCall.function.arguments);
+        console.log("Functions agr:", functionArgs);
         try {
-          const functionResponse = await functionToCall(functionArgs.location);
+          let functionResponse;
+          if (functionName === 'get_current_weather') {
+            functionResponse = await functionToCall(functionArgs.location, functionArgs.unit);
+          } else if (functionName === 'createEvent') {
+            functionResponse = await functionToCall(functionArgs);
+          }
+          //const functionResponse = await functionToCall(functionArgs.location);
           console.log(functionResponse);
           messages.push({
             tool_call_id: toolCall.id,
@@ -65,7 +113,8 @@ const prompt = async (req, res) => {
           });
           messages.push({
             role: "assistant",
-            content: "anyalize the weather you have got and answer based on that.",
+            content:
+              "analyze the output you have got and answer based on that.",
           });
         } catch (error) {
           console.error(

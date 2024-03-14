@@ -24,7 +24,9 @@ const getCurrentWeather = async (city) => {
   } catch (error) {
     // Handle errors
     console.error("Error fetching weather data:", error.message);
-    return { error: "Failed to fetch weather data" };
+    return JSON.stringify({
+      message: "An error occured."
+    });
   }
 };
 
