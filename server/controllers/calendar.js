@@ -10,11 +10,10 @@ const oauth2Client = new google.auth.OAuth2(
     GOOGLE_CLIENT_SECRET,
     'http://localhost:3000'
 );
-const getCalendar = async (req, res) => {
+const getGoogleAccess = async (req, res) => {
 	try {
         const {code} = req.body;
         const response = await oauth2Client.getToken(code);
-        //console.log(response.tokens.refresh_token);
         REFRESH_TOKEN = response.tokens.refresh_token;
 		res.status(201).send(response);
 	} catch (error) {
@@ -51,4 +50,4 @@ const createEvent = async (req, res) => {
 	}
 }
 
-module.exports = {getCalendar, createEvent};
+module.exports = {getGoogleAccess, createEvent};

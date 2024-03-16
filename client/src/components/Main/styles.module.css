@@ -1,14 +1,14 @@
 .navbar {
 	width: 100%;
 	height: 70px;
-	background-color: #213a35;
+	background-color: #c6c9fa;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
 .navbar h1 {
-	color: white;
+	color: #333333;
 	font-size: 25px;
 	margin-left: 20px;
 }
